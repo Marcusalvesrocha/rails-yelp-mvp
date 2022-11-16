@@ -1,0 +1,20 @@
+<h2>Lista de Restaurantes</h2>
+
+
+<div class="row row-cols-1 row-cols-md-2 g-4">
+  <% @restaurants.each do |restaurant| %>
+    <div class="col">
+      <div class="card">
+        <img src="https://source.unsplash.com/random/200x100/?restaurant&<%=restaurant.category%>" class="card-img-top" alt="...">
+        <div class="card-body">
+          <h5 class="card-title"><%= link_to restaurant.name, restaurant_path(restaurant)%></h5>
+          <p class="card-text">Endereço: <%= restaurant.address%></p>
+        <small class="text-muted">Contato: <%= restaurant.phone_number%></small>
+        </div>
+      <div class="card-footer">
+        <small class="text-muted">Rating: <%= restaurant.reviews.count%></small>
+      </div>
+      </div>
+    </div>
+  <% end %>
+</div>

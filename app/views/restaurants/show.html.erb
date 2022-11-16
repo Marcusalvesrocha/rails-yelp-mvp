@@ -1,0 +1,35 @@
+<h2><%=@restaurant.name%></h2>
+<p><img src="https://source.unsplash.com/random/300x200/?restaurant&<%=@restaurant.category%>" class="card-img-top" alt="..."></p>
+<p>Endereço: <%=@restaurant.address%></p>
+<p>Telefone: <%=@restaurant.phone_number%></p>
+<br>
+<br>
+<p>Avaliação: <%=@restaurant.reviews.average(:rating).round(1)%> (<%=@restaurant.reviews.count%>)</p>
+<ol class="list-group list-group-numbered">
+    <% @restaurant.reviews.each do |review| %>
+      <li class="list-group-item d-flex justify-content-between align-items-start">
+        <div class="ms-2 me-auto">
+          <div class="fw-bold"><%= review.content%></div>
+        </div>
+        <span class="badge bg-light rounded-pill">
+          <%= link_to review_path(review), data: { turbo_method: :delete, turbo_confirm: 'Are you sure?'} do %>
+            <i class="fa fa-trash-o"></i>
+          <% end %>
+        </span>
+        <span class="badge bg-success rounded-pill"><%= review.rating%></span>
+      </li>
+    <% end %>
+  </ol>
+
+<div class="container">
+  <%= simple_form_for [@restaurant, @review] do |f| %>
+    <%= f.input :rating %>
+    <%= f.input :content %>
+    <%= f.button :submit, class: 'btn btn-primary mt-3' %>
+  <% end%>
+</div>
+<br>
+<br>
+
+<p><%= link_to "Editar", edit_restaurant_path(@restaurant)%></p>
+<p><%= button_to "Excluir", @restaurant, method: :delete, class: "btn btn-danger" %></p>
